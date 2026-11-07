@@ -1,0 +1,51 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/pigeon_idle.png" id="1_klixd"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/pigeon_walk_01.png" id="2_33821"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/pigeon_walk_02.png" id="3_584fv"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/pigeon_walk_03.png" id="4_ta1vb"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/pigeon_walk_04.png" id="5_egsuo"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/pigeon_walk_05.png" id="6_w68x8"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/pigeon_walk_06.png" id="7_wujej"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/pigeon_walk_07.png" id="8_qxy85"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/pigeon_walk_08.png" id="9_766v7"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_klixd")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_33821")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_584fv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ta1vb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_egsuo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_w68x8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wujej")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_qxy85")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_766v7")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 8.0
+}]

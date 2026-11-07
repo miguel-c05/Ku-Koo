@@ -11,7 +11,11 @@ extends Node2D
 ##
 ## Animation names (state loops):  idle, walk, jump, fall, glide, peck, coo, push
 ## One-shots (played if present):  flap, land, pick_up, drop
-## Missing animations simply fall back to "idle".
+## Missing animations fall back through ANIM_FALLBACKS, then to "idle".
+## While there is no "peck" animation, the sprite tilts forward instead.
+##
+## The AnimatedSprite2D's origin must be at the pigeon's feet (use its
+## offset), so the facing flip and the peck tilt pivot on the feet.
 
 const STATE_ANIMS := {
 	Pigeon.State.IDLE: &"idle",
@@ -20,10 +24,26 @@ const STATE_ANIMS := {
 	Pigeon.State.COO: &"coo",
 	Pigeon.State.PUSH: &"push",
 }
+const ANIM_FALLBACKS := {
+	&"push": &"walk",
+	&"glide": &"fall",
+	&"fall": &"jump",
+}
 const ONE_SHOT_ANIMS: Array[StringName] = [&"flap", &"land", &"pick_up", &"drop"]
 
 @export var pigeon: Pigeon
 @export var animated_sprite: AnimatedSprite2D
+
+@export_group("Real art")
+## Forward tilt used as a stand-in peck while there is no "peck" animation.
+@export var peck_tilt_degrees: float = 45.0
+@export var peck_tilt_time: float = 0.2
+## Time held at full tilt, so the peck reads.
+@export var peck_tilt_hold: float = 0.08
+## Beak tip relative to the feet, facing right (where carried items sit).
+@export var frames_beak_position: Vector2 = Vector2(6, -29)
+## Scale the walk animation speed with the real walking speed.
+@export var walk_anim_follows_speed: bool = true
 
 @export_group("Placeholder rig")
 @export var rig: Node2D
@@ -37,6 +57,7 @@ const ONE_SHOT_ANIMS: Array[StringName] = [&"flap", &"land", &"pick_up", &"drop"
 @export var idle_peck_interval: Vector2 = Vector2(2.5, 5.0)
 
 var _use_frames: bool = false
+var _sprite_scale: Vector2 = Vector2.ONE
 var _one_shot_playing: bool = false
 var _walk_phase: float = 0.0
 var _idle_timer: float = 3.0
@@ -60,6 +81,7 @@ func _ready() -> void:
 	if animated_sprite:
 		animated_sprite.visible = _use_frames
 		animated_sprite.animation_finished.connect(_on_animation_finished)
+		_sprite_scale = animated_sprite.scale.abs()
 	if rig:
 		rig.visible = not _use_frames
 	if head:
@@ -82,7 +104,20 @@ func _process(delta: float) -> void:
 # --- Real art (AnimatedSprite2D) -------------------------------------------
 
 func _update_frames() -> void:
-	animated_sprite.flip_h = pigeon.facing < 0
+	var facing := pigeon.facing
+	# Flip with the scale (not flip_h) so the pivot stays on the feet.
+	animated_sprite.scale = Vector2(_sprite_scale.x * facing, _sprite_scale.y)
+	var tilt := deg_to_rad(peck_tilt_degrees) * _peck_amount
+	animated_sprite.rotation = tilt * facing
+	# Carried items follow the (tilting) beak.
+	pigeon.hold.visual_offset = frames_beak_position.rotated(tilt) - pigeon.hold.base_position
+
+	if walk_anim_follows_speed and animated_sprite.animation == &"walk":
+		var speed := absf(pigeon.get_real_velocity().x) / maxf(pigeon.walk_speed, 1.0)
+		animated_sprite.speed_scale = clampf(speed, 0.35, 1.3)
+	else:
+		animated_sprite.speed_scale = 1.0
+
 	if _one_shot_playing:
 		return
 	_play_frames(_current_loop_anim())
@@ -98,6 +133,8 @@ func _current_loop_anim() -> StringName:
 
 func _play_frames(anim: StringName) -> void:
 	var frames := animated_sprite.sprite_frames
+	while not frames.has_animation(anim) and ANIM_FALLBACKS.has(anim):
+		anim = ANIM_FALLBACKS[anim]
 	if not frames.has_animation(anim):
 		anim = &"idle"
 	if frames.has_animation(anim) and animated_sprite.animation != anim:
@@ -157,11 +194,13 @@ func _update_rig(delta: float) -> void:
 	pigeon.hold.visual_offset = head_offset
 
 
-func _play_peck(duration: float = 0.22) -> void:
+func _play_peck(duration: float = 0.22, hold_time: float = 0.0) -> void:
 	if _peck_tween:
 		_peck_tween.kill()
 	_peck_tween = create_tween()
 	_peck_tween.tween_property(self, "_peck_amount", 1.0, duration * 0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	if hold_time > 0.0:
+		_peck_tween.tween_interval(hold_time)
 	_peck_tween.tween_property(self, "_peck_amount", 0.0, duration * 0.6).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
@@ -196,6 +235,8 @@ func _play_wing_flap() -> void:
 
 func _on_action(action_name: StringName) -> void:
 	if _use_frames:
+		if action_name == &"peck" and not animated_sprite.sprite_frames.has_animation(&"peck"):
+			_play_peck(peck_tilt_time, peck_tilt_hold)
 		if action_name in ONE_SHOT_ANIMS and animated_sprite.sprite_frames.has_animation(action_name):
 			_one_shot_playing = true
 			animated_sprite.play(action_name)

@@ -41,6 +41,15 @@ A jogabilidade nunca toca em arte nem som: o `Pigeon` emite `action(nome)`
 e expõe `state` (`IDLE, WALK, AIR, PECK, COO, PUSH`). Visuais e áudio só escutam.
 Os puzzles ligam-se por sinais no editor (Node > Signals), sem código novo.
 
+## Arte real já integrada
+- `Assets/Sprites/Pigeon/`: `pigeon_idle.png` (do `pombo.png`) e `pigeon_walk_01..08.png`
+  (extraídos de `pombo_andar.mp4`, fundo preto removido, 25% da resolução original).
+- `pigeon_frames.tres`: animações `idle` (1 frame) e `walk` (8 frames, 8 fps, velocidade
+  acompanha a do pombo). Sem animação `peck`, o sprite inclina 45° nos pés ao bicar
+  (`peck_tilt_*` no nó `Visuals`). Estados sem animação usam `idle`.
+- O Godot não reproduz `.mp4`: novas animações entram como sequências PNG no SpriteFrames.
+- O `AnimatedSprite2D` tem a origem nos pés (`offset`); escala 0.22.
+
 ## Substituir por assets reais
 - **Pombo (arte):** em `pigeon.tscn > Visuals > AnimatedSprite2D`, criar um SpriteFrames com as animações
   `idle, walk, jump, fall, glide, peck, coo, push` (+ opcionais `flap, land, pick_up, drop`).

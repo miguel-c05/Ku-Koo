@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_tail.png" id="15_tail"]
 [ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_leg.png" id="16_leg"]
 [ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_foot_string.png" id="17_string"]
+[ext_resource type="SpriteFrames" path="res://Assets/Sprites/Pigeon/pigeon_frames.tres" id="18_frames"]
 
 [sub_resource type="RectangleShape2D" id="Shape_body"]
 size = Vector2(18, 18)
@@ -90,8 +91,11 @@ position = Vector2(7, 1)
 texture = ExtResource("12_beak")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals"]
-visible = false
-position = Vector2(0, -14)
+scale = Vector2(0.22, 0.22)
+sprite_frames = ExtResource("18_frames")
+animation = &"idle"
+centered = false
+offset = Vector2(-124, -163)
 
 [node name="CooRing" type="Node2D" parent="Visuals"]
 position = Vector2(0, -12)
@@ -101,7 +105,7 @@ script = ExtResource("7_ring")
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("8_bubble")
-anchor = Vector2(0, -30)
+anchor = Vector2(0, -42)
 
 [node name="BeakArea" type="Area2D" parent="."]
 position = Vector2(16, -12)

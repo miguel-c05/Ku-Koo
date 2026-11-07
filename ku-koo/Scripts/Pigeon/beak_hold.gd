@@ -16,14 +16,15 @@ var visual_offset: Vector2 = Vector2.ZERO:
 		visual_offset = value
 		_refresh_position()
 
-var _base: Vector2
+## Beak position when facing right (from the scene), before visual_offset.
+var base_position: Vector2
 var _facing: int = 1
 
 @onready var pigeon: Pigeon = get_parent() as Pigeon
 
 
 func _ready() -> void:
-	_base = Vector2(absf(position.x), position.y)
+	base_position = Vector2(absf(position.x), position.y)
 
 
 func is_carrying() -> bool:
@@ -100,4 +101,4 @@ func set_facing(new_facing: int) -> void:
 
 
 func _refresh_position() -> void:
-	position = Vector2((_base.x + visual_offset.x) * _facing, _base.y + visual_offset.y)
+	position = Vector2((base_position.x + visual_offset.x) * _facing, base_position.y + visual_offset.y)
