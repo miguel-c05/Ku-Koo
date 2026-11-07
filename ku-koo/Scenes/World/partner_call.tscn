@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/World/partner_call.gd" id="1_partner"]
+[ext_resource type="Script" path="res://Scripts/Interaction/coo_listener.gd" id="2_listen"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/partner_coo.wav" id="3_coo"]
+
+[node name="PartnerCall" type="Node2D" node_paths=PackedStringArray("voice", "listener")]
+script = ExtResource("1_partner")
+voice = NodePath("Voice")
+listener = NodePath("CooListener")
+
+[node name="Voice" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_coo")
+max_distance = 9000.0
+attenuation = 0.8
+
+[node name="CooListener" type="Node2D" parent="."]
+script = ExtResource("2_listen")
+hears_from_anywhere = true
+reaction_delay = 0.9

@@ -1,3 +1,268 @@
 [gd_scene format=3 uid="uid://2wnysthosb5y"]
 
-[node name="MovementDemo" type="Node2D" unique_id=1248507267]
+[ext_resource type="Script" path="res://Scripts/World/placeholder_block.gd" id="block"]
+[ext_resource type="Script" path="res://Scripts/World/instruction_prompt.gd" id="prompt"]
+[ext_resource type="Script" path="res://Scripts/World/placeholder_skyline.gd" id="skyline"]
+[ext_resource type="Script" path="res://Scripts/World/follow_camera.gd" id="camera"]
+[ext_resource type="Script" path="res://Scripts/World/slide_mover.gd" id="slide"]
+[ext_resource type="Script" path="res://Scripts/Audio/event_sound.gd" id="sound"]
+[ext_resource type="PackedScene" path="res://Scenes/Pigeon/pigeon.tscn" id="pigeon"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/hanging_cod.tscn" id="hangcod"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/hungry_cat.tscn" id="cat"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/pushable_crate.tscn" id="crate"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/latch_pin.tscn" id="latch"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/townsperson.tscn" id="person"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/leaf_cover.tscn" id="leaf"]
+[ext_resource type="PackedScene" path="res://Scenes/World/partner_call.tscn" id="partner"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/demo_hud.tscn" id="hud"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/gate_slide.wav" id="gatesnd"]
+
+[node name="MovementDemo" type="Node2D"]
+
+[node name="FarBackground" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.3, 0.85)
+
+[node name="Skyline" type="Node2D" parent="FarBackground"]
+script = ExtResource("skyline")
+random_seed = 3
+span = Vector2(-600, 1700)
+base_y = 60
+height_range = Vector2(140, 280)
+color = Color(0.16, 0.15, 0.16, 1)
+
+[node name="Background" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.6, 0.92)
+
+[node name="Houses" type="Node2D" parent="Background"]
+script = ExtResource("skyline")
+random_seed = 11
+span = Vector2(-600, 2600)
+base_y = 30
+width_range = Vector2(70, 150)
+height_range = Vector2(70, 170)
+gap_range = Vector2(10, 60)
+color = Color(0.23, 0.21, 0.2, 1)
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Ground" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(-300, 0)
+size = Vector2(3400, 200)
+color = Color(0.3, 0.27, 0.25, 1)
+
+[node name="WallLeft" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(-300, -400)
+size = Vector2(40, 400)
+color = Color(0.22, 0.2, 0.2, 1)
+
+[node name="WallRight" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(3060, -400)
+size = Vector2(40, 400)
+color = Color(0.22, 0.2, 0.2, 1)
+
+[node name="HopCrate" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(300, -36)
+size = Vector2(48, 36)
+color = Color(0.45, 0.32, 0.2, 1)
+
+[node name="FlapLedge" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(470, -80)
+size = Vector2(150, 80)
+color = Color(0.4, 0.36, 0.32, 1)
+
+[node name="PeckLedge" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(700, -40)
+size = Vector2(70, 40)
+color = Color(0.4, 0.36, 0.32, 1)
+
+[node name="Beam" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(740, -132)
+size = Vector2(120, 14)
+color = Color(0.45, 0.32, 0.2, 1)
+
+[node name="ArchWall" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(960, -300)
+size = Vector2(70, 264)
+color = Color(0.22, 0.2, 0.2, 1)
+
+[node name="CatSill" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(1115, -60)
+size = Vector2(60, 10)
+color = Color(0.45, 0.32, 0.2, 1)
+
+[node name="HighWall" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(1450, -110)
+size = Vector2(200, 110)
+color = Color(0.4, 0.36, 0.32, 1)
+
+[node name="GateWall" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(1810, -400)
+size = Vector2(38, 260)
+color = Color(0.22, 0.2, 0.2, 1)
+
+[node name="EndStep" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(2650, -30)
+size = Vector2(80, 30)
+color = Color(0.4, 0.36, 0.32, 1)
+
+[node name="Gate" type="AnimatableBody2D" parent="Level"]
+script = ExtResource("block")
+position = Vector2(1820, -140)
+size = Vector2(16, 140)
+color = Color(0.5, 0.38, 0.22, 1)
+
+[node name="Mover" type="Node" parent="Level/Gate"]
+script = ExtResource("slide")
+offset = Vector2(0, -130)
+duration = 1.2
+delay = 0.2
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="Level/Gate"]
+position = Vector2(8, -70)
+stream = ExtResource("gatesnd")
+script = ExtResource("sound")
+
+[node name="Props" type="Node2D" parent="."]
+
+[node name="HangingCod" parent="Props" instance=ExtResource("hangcod")]
+position = Vector2(782, -118)
+
+[node name="HungryCat" parent="Props" instance=ExtResource("cat")]
+position = Vector2(995, 0)
+
+[node name="PushableCrate" parent="Props" instance=ExtResource("crate")]
+position = Vector2(1270, 0)
+
+[node name="LatchPin" parent="Props" instance=ExtResource("latch")]
+position = Vector2(1795, 0)
+
+[node name="Townsperson" parent="Props" instance=ExtResource("person")]
+position = Vector2(2060, 0)
+
+[node name="LeafCover" parent="Props" instance=ExtResource("leaf")]
+position = Vector2(2320, 0)
+
+[node name="PartnerCall" parent="Props" instance=ExtResource("partner")]
+position = Vector2(5200, -150)
+
+[node name="Prompts" type="Node2D" parent="."]
+
+[node name="PromptWalk" type="Area2D" parent="Prompts"]
+position = Vector2(70, 0)
+script = ExtResource("prompt")
+text = "A / D   andar"
+zone_size = Vector2(220, 80)
+complete_on_exit = true
+
+[node name="PromptJump" type="Area2D" parent="Prompts"]
+position = Vector2(250, 0)
+script = ExtResource("prompt")
+text = "Espaço   saltar"
+zone_size = Vector2(140, 80)
+completed_by = &"jump"
+
+[node name="PromptFlap" type="Area2D" parent="Prompts"]
+position = Vector2(420, 0)
+script = ExtResource("prompt")
+text = "No ar, Espaço outra vez\nbater asas"
+zone_size = Vector2(110, 90)
+completed_by = &"flap"
+label_offset = Vector2(0, -95)
+
+[node name="PromptPeck" type="Area2D" parent="Prompts"]
+position = Vector2(735, -40)
+script = ExtResource("prompt")
+text = "E / J   bicar"
+zone_size = Vector2(90, 70)
+completed_by = &"peck_hit"
+label_offset = Vector2(0, -80)
+
+[node name="PromptCarry" type="Area2D" parent="Prompts"]
+position = Vector2(860, 0)
+script = ExtResource("prompt")
+text = "Bica o bacalhau para o levar\nno bico ao gato"
+zone_size = Vector2(150, 80)
+completed_by = &"give"
+label_offset = Vector2(0, -75)
+
+[node name="PromptPush" type="Area2D" parent="Prompts"]
+position = Vector2(1220, 0)
+script = ExtResource("prompt")
+text = "Bica a caixa para a agarrar\nanda para empurrar / puxar"
+zone_size = Vector2(140, 80)
+completed_by = &"grab"
+label_offset = Vector2(0, -75)
+
+[node name="PromptLatch" type="Area2D" parent="Prompts"]
+position = Vector2(1750, 0)
+script = ExtResource("prompt")
+text = "Bica o trinco"
+zone_size = Vector2(110, 80)
+completed_by = &"peck_hit"
+
+[node name="PromptCoo" type="Area2D" parent="Prompts"]
+position = Vector2(2190, 0)
+script = ExtResource("prompt")
+text = "Q / K   arrulhar"
+zone_size = Vector2(300, 90)
+completed_by = &"coo"
+show_every_time = true
+
+[node name="EndSign" type="Label" parent="Prompts"]
+offset_left = 2700.0
+offset_top = -110.0
+offset_right = 3000.0
+offset_bottom = -70.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 0.9, 0.8, 1)
+theme_override_constants/outline_size = 6
+theme_override_colors/font_outline_color = Color(0.1, 0.07, 0.05, 0.9)
+theme_override_font_sizes/font_size = 18
+text = "Fim da demo · a casa fica para a direita\n(a companheira chama de lá)"
+
+[node name="Pigeon" parent="." instance=ExtResource("pigeon")]
+position = Vector2(40, 0)
+
+[node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("camera")
+position = Vector2(40, -30)
+zoom = Vector2(2.5, 2.5)
+limit_left = -260
+limit_top = -500
+limit_right = 3060
+limit_bottom = 80
+target = NodePath("../Pigeon")
+
+[node name="Foreground" type="Parallax2D" parent="."]
+z_index = 20
+scroll_scale = Vector2(1.3, 1.0)
+
+[node name="Posts" type="Node2D" parent="Foreground"]
+script = ExtResource("skyline")
+random_seed = 5
+span = Vector2(-300, 4300)
+base_y = 140
+width_range = Vector2(10, 18)
+height_range = Vector2(230, 300)
+gap_range = Vector2(280, 520)
+color = Color(0.07, 0.06, 0.06, 0.75)
+windows = false
+
+[node name="DemoHUD" parent="." node_paths=PackedStringArray("pigeon", "partner") instance=ExtResource("hud")]
+pigeon = NodePath("../Pigeon")
+partner = NodePath("../Props/PartnerCall")
+
+[connection signal="opened" from="Props/LatchPin" to="Level/Gate/Mover" method="activate"]
+[connection signal="opened" from="Props/LatchPin" to="Level/Gate/Sound" method="play_event"]

@@ -1,0 +1,128 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Pigeon/pigeon.gd" id="1_pigeon"]
+[ext_resource type="Script" path="res://Scripts/Pigeon/pigeon_visuals.gd" id="2_visuals"]
+[ext_resource type="Script" path="res://Scripts/Pigeon/beak_hold.gd" id="3_hold"]
+[ext_resource type="Script" path="res://Scripts/Pigeon/peck_ability.gd" id="4_peck"]
+[ext_resource type="Script" path="res://Scripts/Pigeon/coo_ability.gd" id="5_coo"]
+[ext_resource type="Script" path="res://Scripts/Pigeon/pigeon_audio.gd" id="6_audio"]
+[ext_resource type="Script" path="res://Scripts/World/coo_ring.gd" id="7_ring"]
+[ext_resource type="Script" path="res://Scripts/World/speech_bubble.gd" id="8_bubble"]
+[ext_resource type="Resource" path="res://Assets/Audios/pigeon_sound_bank.tres" id="9_bank"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_body.png" id="10_body"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_head.png" id="11_head"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_beak.png" id="12_beak"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_eye.png" id="13_eye"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_wing.png" id="14_wing"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_tail.png" id="15_tail"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_leg.png" id="16_leg"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_foot_string.png" id="17_string"]
+
+[sub_resource type="RectangleShape2D" id="Shape_body"]
+size = Vector2(18, 18)
+
+[sub_resource type="CircleShape2D" id="Shape_beak"]
+radius = 14.0
+
+[node name="Pigeon" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+floor_snap_length = 4.0
+script = ExtResource("1_pigeon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("Shape_body")
+
+[node name="Visuals" type="Node2D" parent="." node_paths=PackedStringArray("pigeon", "animated_sprite", "rig", "body", "head", "wing", "coo_ring", "bubble")]
+script = ExtResource("2_visuals")
+pigeon = NodePath("..")
+animated_sprite = NodePath("AnimatedSprite2D")
+rig = NodePath("Rig")
+body = NodePath("Rig/Body")
+head = NodePath("Rig/Head")
+wing = NodePath("Rig/Wing")
+coo_ring = NodePath("CooRing")
+bubble = NodePath("Bubble")
+
+[node name="Rig" type="Node2D" parent="Visuals"]
+
+[node name="FootString" type="Sprite2D" parent="Visuals/Rig"]
+position = Vector2(-4, 1.5)
+rotation = 0.5
+texture = ExtResource("17_string")
+
+[node name="LegBack" type="Sprite2D" parent="Visuals/Rig"]
+position = Vector2(-3, -2)
+texture = ExtResource("16_leg")
+
+[node name="LegFront" type="Sprite2D" parent="Visuals/Rig"]
+position = Vector2(3, -2)
+texture = ExtResource("16_leg")
+
+[node name="Tail" type="Sprite2D" parent="Visuals/Rig"]
+position = Vector2(-13, -12)
+texture = ExtResource("15_tail")
+
+[node name="Body" type="Sprite2D" parent="Visuals/Rig"]
+position = Vector2(0, -10)
+texture = ExtResource("10_body")
+
+[node name="Wing" type="Node2D" parent="Visuals/Rig"]
+position = Vector2(5, -12)
+
+[node name="WingSprite" type="Sprite2D" parent="Visuals/Rig/Wing"]
+position = Vector2(-7, 0)
+texture = ExtResource("14_wing")
+
+[node name="Head" type="Node2D" parent="Visuals/Rig"]
+position = Vector2(9, -19)
+
+[node name="HeadSprite" type="Sprite2D" parent="Visuals/Rig/Head"]
+texture = ExtResource("11_head")
+
+[node name="Eye" type="Sprite2D" parent="Visuals/Rig/Head"]
+position = Vector2(2, -1)
+texture = ExtResource("13_eye")
+
+[node name="Beak" type="Sprite2D" parent="Visuals/Rig/Head"]
+position = Vector2(7, 1)
+texture = ExtResource("12_beak")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals"]
+visible = false
+position = Vector2(0, -14)
+
+[node name="CooRing" type="Node2D" parent="Visuals"]
+position = Vector2(0, -12)
+script = ExtResource("7_ring")
+
+[node name="Bubble" type="Label" parent="Visuals"]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("8_bubble")
+anchor = Vector2(0, -30)
+
+[node name="BeakArea" type="Area2D" parent="."]
+position = Vector2(16, -12)
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BeakArea"]
+shape = SubResource("Shape_beak")
+
+[node name="BeakHold" type="Marker2D" parent="."]
+position = Vector2(17, -18)
+script = ExtResource("3_hold")
+
+[node name="PeckAbility" type="Node" parent="."]
+script = ExtResource("4_peck")
+
+[node name="CooAbility" type="Node" parent="."]
+script = ExtResource("5_coo")
+
+[node name="Audio" type="Node2D" parent="." node_paths=PackedStringArray("pigeon")]
+script = ExtResource("6_audio")
+pigeon = NodePath("..")
+sound_bank = ExtResource("9_bank")

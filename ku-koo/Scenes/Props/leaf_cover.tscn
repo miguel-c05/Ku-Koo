@@ -1,0 +1,62 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Props/leaf_cover.gd" id="1_leaf"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/worm.tscn" id="2_worm"]
+[ext_resource type="Script" path="res://Scripts/World/slide_mover.gd" id="3_slide"]
+[ext_resource type="Script" path="res://Scripts/World/trembler.gd" id="4_tremble"]
+[ext_resource type="Script" path="res://Scripts/Interaction/toggle_interactable.gd" id="5_toggle"]
+[ext_resource type="Script" path="res://Scripts/Interaction/coo_listener.gd" id="6_listen"]
+[ext_resource type="Script" path="res://Scripts/Audio/event_sound.gd" id="7_sound"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/leaf.png" id="8_tex"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/leaf_rustle.wav" id="9_rustle"]
+
+[sub_resource type="RectangleShape2D" id="Shape_leaf"]
+size = Vector2(36, 16)
+
+[node name="LeafCover" type="Node2D" node_paths=PackedStringArray("hidden_item", "mover")]
+script = ExtResource("1_leaf")
+hidden_item = NodePath("Worm")
+mover = NodePath("LeafMover")
+
+[node name="Worm" parent="." instance=ExtResource("2_worm")]
+position = Vector2(0, -2)
+
+[node name="Leaf" type="Node2D" parent="."]
+z_index = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Leaf"]
+position = Vector2(0, -6)
+texture = ExtResource("8_tex")
+
+[node name="Toggle" type="Area2D" parent="Leaf"]
+position = Vector2(0, -6)
+script = ExtResource("5_toggle")
+prompt = "afastar a folha"
+marker_offset = Vector2(0, -14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Leaf/Toggle"]
+shape = SubResource("Shape_leaf")
+
+[node name="LeafMover" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("3_slide")
+target = NodePath("../Leaf")
+offset = Vector2(32, 3)
+duration = 0.35
+
+[node name="LeafTrembler" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("4_tremble")
+target = NodePath("../Leaf/Sprite2D")
+
+[node name="CooListener" type="Node2D" parent="."]
+position = Vector2(0, -6)
+script = ExtResource("6_listen")
+reaction_delay = 0.35
+
+[node name="RustleSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_rustle")
+script = ExtResource("7_sound")
+
+[connection signal="switched_on" from="Leaf/Toggle" to="LeafMover" method="activate"]
+[connection signal="switched_on" from="Leaf/Toggle" to="RustleSound" method="play_event"]
+[connection signal="heard" from="CooListener" to="LeafTrembler" method="tremble"]
+[connection signal="heard" from="CooListener" to="RustleSound" method="play_event"]

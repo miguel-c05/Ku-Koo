@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="SoundBank" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Audio/sound_bank.gd" id="1_78w6q"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/pigeon_jump.wav" id="2_o5eh3"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/pigeon_flap.wav" id="3_gu0qe"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/pigeon_land.wav" id="4_gf8fy"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/pigeon_step.wav" id="5_onsgd"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/pigeon_peck.wav" id="6_1dyki"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/pigeon_coo.wav" id="7_11a8q"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/pigeon_pick_up.wav" id="8_5yxun"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/pigeon_drop.wav" id="9_8ft3h"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/pigeon_grab.wav" id="10_u4x31"]
+
+[resource]
+script = ExtResource("1_78w6q")
+sounds = Dictionary[StringName, AudioStream]({
+&"coo": ExtResource("7_11a8q"),
+&"drop": ExtResource("9_8ft3h"),
+&"flap": ExtResource("3_gu0qe"),
+&"give": ExtResource("9_8ft3h"),
+&"grab": ExtResource("10_u4x31"),
+&"jump": ExtResource("2_o5eh3"),
+&"land": ExtResource("4_gf8fy"),
+&"peck": ExtResource("6_1dyki"),
+&"pick_up": ExtResource("8_5yxun"),
+&"release": ExtResource("9_8ft3h"),
+&"step": ExtResource("5_onsgd")
+})
+volume_db = Dictionary[StringName, float]({
+&"release": -8.0,
+&"step": -6.0
+})

@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Props/townsperson.gd" id="1_person"]
+[ext_resource type="Script" path="res://Scripts/Interaction/coo_listener.gd" id="2_listen"]
+[ext_resource type="Script" path="res://Scripts/World/speech_bubble.gd" id="3_bubble"]
+[ext_resource type="Script" path="res://Scripts/Audio/event_sound.gd" id="4_sound"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/person.png" id="5_tex"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/person_hm.wav" id="6_hm"]
+
+[node name="Townsperson" type="Node2D" node_paths=PackedStringArray("sprite", "bubble", "voice")]
+z_index = -1
+script = ExtResource("1_person")
+sprite = NodePath("Sprite2D")
+bubble = NodePath("Bubble")
+voice = NodePath("Voice")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+flip_h = true
+texture = ExtResource("5_tex")
+
+[node name="CooListener" type="Node2D" parent="."]
+position = Vector2(0, -40)
+script = ExtResource("2_listen")
+hearing_bonus = 40.0
+reaction_delay = 0.25
+
+[node name="Bubble" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("3_bubble")
+anchor = Vector2(0, -68)
+
+[node name="Voice" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -56)
+stream = ExtResource("6_hm")
+script = ExtResource("4_sound")
+
+[connection signal="heard" from="CooListener" to="." method="hear_coo"]

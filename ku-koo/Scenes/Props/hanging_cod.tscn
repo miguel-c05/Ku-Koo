@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Interaction/breakable_interactable.gd" id="1_break"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/cod.tscn" id="2_cod"]
+[ext_resource type="Script" path="res://Scripts/World/trembler.gd" id="3_tremble"]
+[ext_resource type="Script" path="res://Scripts/Audio/event_sound.gd" id="4_sound"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/string_snap.wav" id="5_snap"]
+
+[sub_resource type="RectangleShape2D" id="Shape_string"]
+size = Vector2(24, 34)
+
+[node name="HangingCod" type="Node2D"]
+
+[node name="String" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 80)
+width = 1.5
+default_color = Color(0.72, 0.64, 0.48, 1)
+
+[node name="StringTrembler" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("3_tremble")
+target = NodePath("../String")
+
+[node name="PeckPoint" type="Area2D" parent="."]
+position = Vector2(0, 62)
+script = ExtResource("1_break")
+pecks_to_break = 2
+marker_offset = Vector2(-10, -14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PeckPoint"]
+shape = SubResource("Shape_string")
+
+[node name="Cod" parent="." instance=ExtResource("2_cod")]
+position = Vector2(0, 84)
+start_hanging = true
+
+[node name="SnapSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, 70)
+stream = ExtResource("5_snap")
+script = ExtResource("4_sound")
+
+[connection signal="hit" from="PeckPoint" to="StringTrembler" method="tremble"]
+[connection signal="broken" from="PeckPoint" to="String" method="hide"]
+[connection signal="broken" from="PeckPoint" to="Cod" method="release"]
+[connection signal="broken" from="PeckPoint" to="SnapSound" method="play_event"]

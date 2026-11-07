@@ -1,0 +1,46 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Props/latch_pin.gd" id="1_latch"]
+[ext_resource type="Script" path="res://Scripts/Interaction/toggle_interactable.gd" id="2_toggle"]
+[ext_resource type="Script" path="res://Scripts/World/slide_mover.gd" id="3_slide"]
+[ext_resource type="Script" path="res://Scripts/Audio/event_sound.gd" id="4_sound"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/latch_post.png" id="5_post"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/latch_pin.png" id="6_pin"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/latch_clunk.wav" id="7_clunk"]
+
+[sub_resource type="RectangleShape2D" id="Shape_pin"]
+size = Vector2(22, 18)
+
+[node name="LatchPin" type="Node2D" node_paths=PackedStringArray("toggle")]
+script = ExtResource("1_latch")
+toggle = NodePath("Toggle")
+
+[node name="Post" type="Sprite2D" parent="."]
+position = Vector2(0, -14)
+texture = ExtResource("5_post")
+
+[node name="Pin" type="Sprite2D" parent="."]
+position = Vector2(-4, -14)
+texture = ExtResource("6_pin")
+
+[node name="PinMover" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("3_slide")
+target = NodePath("../Pin")
+offset = Vector2(-10, 0)
+duration = 0.15
+
+[node name="Toggle" type="Area2D" parent="."]
+position = Vector2(-6, -14)
+script = ExtResource("2_toggle")
+prompt = "puxar o trinco"
+marker_offset = Vector2(0, -20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Toggle"]
+shape = SubResource("Shape_pin")
+
+[node name="ClunkSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_clunk")
+script = ExtResource("4_sound")
+
+[connection signal="switched_on" from="Toggle" to="PinMover" method="activate"]
+[connection signal="switched_on" from="Toggle" to="ClunkSound" method="play_event"]
