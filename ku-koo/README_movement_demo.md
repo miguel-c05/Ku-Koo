@@ -26,9 +26,9 @@ Comando: A saltar, X bicar, Y arrulhar.
 ## Estrutura
 ```
 Scripts/Pigeon/       pigeon.gd (física), peck_ability, coo_ability, beak_hold,
-                      pigeon_visuals (apresentação), pigeon_audio
+					  pigeon_visuals (apresentação), pigeon_audio
 Scripts/Interaction/  Interactable (base) + Pickup, Grab, Breakable, Toggle,
-                      ItemReceiver, CooListener, CarryableItem, PushableBody
+					  ItemReceiver, CooListener, CarryableItem, PushableBody
 Scripts/World/        blocos, câmara, prompts, partner_call, slide_mover, trembler...
 Scripts/Props/        gato, pessoa, trinco, folha
 Scripts/Audio/        SoundBank (resource), EventSound
