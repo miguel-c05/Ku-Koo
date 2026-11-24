@@ -1,266 +1,270 @@
 [gd_scene format=3 uid="uid://2wnysthosb5y"]
 
-[ext_resource type="Script" path="res://Scripts/World/placeholder_block.gd" id="block"]
-[ext_resource type="Script" path="res://Scripts/World/instruction_prompt.gd" id="prompt"]
-[ext_resource type="Script" path="res://Scripts/World/placeholder_skyline.gd" id="skyline"]
-[ext_resource type="Script" path="res://Scripts/World/follow_camera.gd" id="camera"]
-[ext_resource type="Script" path="res://Scripts/World/slide_mover.gd" id="slide"]
-[ext_resource type="Script" path="res://Scripts/Audio/event_sound.gd" id="sound"]
-[ext_resource type="PackedScene" path="res://Scenes/Pigeon/pigeon.tscn" id="pigeon"]
-[ext_resource type="PackedScene" path="res://Scenes/Props/hanging_cod.tscn" id="hangcod"]
+[ext_resource type="Script" uid="uid://bsdhe333tqi5a" path="res://Scripts/World/placeholder_block.gd" id="block"]
+[ext_resource type="Script" uid="uid://ddcvwuv7dsl28" path="res://Scripts/World/follow_camera.gd" id="camera"]
 [ext_resource type="PackedScene" path="res://Scenes/Props/hungry_cat.tscn" id="cat"]
 [ext_resource type="PackedScene" path="res://Scenes/Props/pushable_crate.tscn" id="crate"]
+[ext_resource type="AudioStream" uid="uid://dxm6vwfpl67m8" path="res://Assets/Audios/Placeholders/gate_slide.wav" id="gatesnd"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/hanging_cod.tscn" id="hangcod"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/demo_hud.tscn" id="hud"]
 [ext_resource type="PackedScene" path="res://Scenes/Props/latch_pin.tscn" id="latch"]
-[ext_resource type="PackedScene" path="res://Scenes/Props/townsperson.tscn" id="person"]
 [ext_resource type="PackedScene" path="res://Scenes/Props/leaf_cover.tscn" id="leaf"]
 [ext_resource type="PackedScene" path="res://Scenes/World/partner_call.tscn" id="partner"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/demo_hud.tscn" id="hud"]
-[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/gate_slide.wav" id="gatesnd"]
+[ext_resource type="PackedScene" path="res://Scenes/Props/townsperson.tscn" id="person"]
+[ext_resource type="PackedScene" path="res://Scenes/Pigeon/pigeon.tscn" id="pigeon"]
+[ext_resource type="Script" uid="uid://b5qwehklahti8" path="res://Scripts/World/instruction_prompt.gd" id="prompt"]
+[ext_resource type="Script" uid="uid://brpg8pbtjsjix" path="res://Scripts/World/placeholder_skyline.gd" id="skyline"]
+[ext_resource type="Script" uid="uid://b32rqdccine0" path="res://Scripts/World/slide_mover.gd" id="slide"]
+[ext_resource type="Script" uid="uid://bdcbf2ghjqigi" path="res://Scripts/Audio/event_sound.gd" id="sound"]
 
-[node name="MovementDemo" type="Node2D"]
+[node name="MovementDemo" type="Node2D" unique_id=560876075]
 
-[node name="FarBackground" type="Parallax2D" parent="."]
+[node name="FarBackground" type="Parallax2D" parent="." unique_id=1384643000]
 scroll_scale = Vector2(0.3, 0.85)
 
-[node name="Skyline" type="Node2D" parent="FarBackground"]
+[node name="Skyline" type="Node2D" parent="FarBackground" unique_id=203674006]
 script = ExtResource("skyline")
 random_seed = 3
 span = Vector2(-600, 1700)
-base_y = 60
+base_y = 60.0
 height_range = Vector2(140, 280)
 color = Color(0.16, 0.15, 0.16, 1)
 
-[node name="Background" type="Parallax2D" parent="."]
+[node name="Background" type="Parallax2D" parent="." unique_id=2097345252]
 scroll_scale = Vector2(0.6, 0.92)
 
-[node name="Houses" type="Node2D" parent="Background"]
+[node name="Houses" type="Node2D" parent="Background" unique_id=851023568]
 script = ExtResource("skyline")
 random_seed = 11
 span = Vector2(-600, 2600)
-base_y = 30
+base_y = 30.0
 width_range = Vector2(70, 150)
 height_range = Vector2(70, 170)
 gap_range = Vector2(10, 60)
 color = Color(0.23, 0.21, 0.2, 1)
 
-[node name="Level" type="Node2D" parent="."]
+[node name="Level" type="Node2D" parent="." unique_id=785201004]
 
-[node name="Ground" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="Ground" type="AnimatableBody2D" parent="Level" unique_id=1363007866]
 position = Vector2(-300, 0)
+script = ExtResource("block")
 size = Vector2(3400, 200)
 color = Color(0.3, 0.27, 0.25, 1)
 
-[node name="WallLeft" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="WallLeft" type="AnimatableBody2D" parent="Level" unique_id=18885948]
 position = Vector2(-300, -400)
+script = ExtResource("block")
 size = Vector2(40, 400)
 color = Color(0.22, 0.2, 0.2, 1)
 
-[node name="WallRight" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="WallRight" type="AnimatableBody2D" parent="Level" unique_id=476381858]
 position = Vector2(3060, -400)
+script = ExtResource("block")
 size = Vector2(40, 400)
 color = Color(0.22, 0.2, 0.2, 1)
 
-[node name="HopCrate" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="HopCrate" type="AnimatableBody2D" parent="Level" unique_id=1181811859]
 position = Vector2(300, -36)
+script = ExtResource("block")
 size = Vector2(48, 36)
 color = Color(0.45, 0.32, 0.2, 1)
 
-[node name="FlapLedge" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="FlapLedge" type="AnimatableBody2D" parent="Level" unique_id=169030616]
 position = Vector2(470, -80)
+script = ExtResource("block")
 size = Vector2(150, 80)
 color = Color(0.4, 0.36, 0.32, 1)
 
-[node name="PeckLedge" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="PeckLedge" type="AnimatableBody2D" parent="Level" unique_id=1741595311]
 position = Vector2(700, -40)
+script = ExtResource("block")
 size = Vector2(70, 40)
 color = Color(0.4, 0.36, 0.32, 1)
 
-[node name="Beam" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="Beam" type="AnimatableBody2D" parent="Level" unique_id=1052598516]
 position = Vector2(740, -132)
+script = ExtResource("block")
 size = Vector2(120, 14)
 color = Color(0.45, 0.32, 0.2, 1)
 
-[node name="ArchWall" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="ArchWall" type="AnimatableBody2D" parent="Level" unique_id=149652029]
 position = Vector2(960, -300)
+script = ExtResource("block")
 size = Vector2(70, 264)
 color = Color(0.22, 0.2, 0.2, 1)
 
-[node name="CatSill" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="CatSill" type="AnimatableBody2D" parent="Level" unique_id=1511445067]
 position = Vector2(1115, -60)
+script = ExtResource("block")
 size = Vector2(60, 10)
 color = Color(0.45, 0.32, 0.2, 1)
 
-[node name="HighWall" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="HighWall" type="AnimatableBody2D" parent="Level" unique_id=1945827139]
 position = Vector2(1450, -110)
+script = ExtResource("block")
 size = Vector2(200, 110)
 color = Color(0.4, 0.36, 0.32, 1)
 
-[node name="GateWall" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="GateWall" type="AnimatableBody2D" parent="Level" unique_id=221096205]
 position = Vector2(1810, -400)
+script = ExtResource("block")
 size = Vector2(38, 260)
 color = Color(0.22, 0.2, 0.2, 1)
 
-[node name="EndStep" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="EndStep" type="AnimatableBody2D" parent="Level" unique_id=51739765]
 position = Vector2(2650, -30)
+script = ExtResource("block")
 size = Vector2(80, 30)
 color = Color(0.4, 0.36, 0.32, 1)
 
-[node name="Gate" type="AnimatableBody2D" parent="Level"]
-script = ExtResource("block")
+[node name="Gate" type="AnimatableBody2D" parent="Level" unique_id=46846753]
 position = Vector2(1820, -140)
+script = ExtResource("block")
 size = Vector2(16, 140)
 color = Color(0.5, 0.38, 0.22, 1)
 
-[node name="Mover" type="Node" parent="Level/Gate"]
+[node name="Mover" type="Node" parent="Level/Gate" unique_id=1527436072]
 script = ExtResource("slide")
 offset = Vector2(0, -130)
 duration = 1.2
 delay = 0.2
 
-[node name="Sound" type="AudioStreamPlayer2D" parent="Level/Gate"]
+[node name="Sound" type="AudioStreamPlayer2D" parent="Level/Gate" unique_id=66502772]
 position = Vector2(8, -70)
 stream = ExtResource("gatesnd")
 script = ExtResource("sound")
 
-[node name="Props" type="Node2D" parent="."]
+[node name="Props" type="Node2D" parent="." unique_id=988835740]
 
-[node name="HangingCod" parent="Props" instance=ExtResource("hangcod")]
+[node name="HangingCod" parent="Props" unique_id=1840785277 instance=ExtResource("hangcod")]
 position = Vector2(782, -118)
 
-[node name="HungryCat" parent="Props" instance=ExtResource("cat")]
+[node name="HungryCat" parent="Props" unique_id=1731375674 instance=ExtResource("cat")]
 position = Vector2(995, 0)
 
-[node name="PushableCrate" parent="Props" instance=ExtResource("crate")]
+[node name="PushableCrate" parent="Props" unique_id=2105169887 instance=ExtResource("crate")]
 position = Vector2(1270, 0)
 
-[node name="LatchPin" parent="Props" instance=ExtResource("latch")]
+[node name="LatchPin" parent="Props" unique_id=91742999 instance=ExtResource("latch")]
 position = Vector2(1795, 0)
 
-[node name="Townsperson" parent="Props" instance=ExtResource("person")]
+[node name="Townsperson" parent="Props" unique_id=1825131378 instance=ExtResource("person")]
 position = Vector2(2060, 0)
 
-[node name="LeafCover" parent="Props" instance=ExtResource("leaf")]
+[node name="LeafCover" parent="Props" unique_id=1469466748 instance=ExtResource("leaf")]
 position = Vector2(2320, 0)
 
-[node name="PartnerCall" parent="Props" instance=ExtResource("partner")]
+[node name="PartnerCall" parent="Props" unique_id=1464775919 instance=ExtResource("partner")]
 position = Vector2(5200, -150)
 
-[node name="Prompts" type="Node2D" parent="."]
+[node name="Prompts" type="Node2D" parent="." unique_id=530186]
 
-[node name="PromptWalk" type="Area2D" parent="Prompts"]
+[node name="PromptWalk" type="Area2D" parent="Prompts" unique_id=1897786437]
 position = Vector2(70, 0)
 script = ExtResource("prompt")
 text = "A / D   andar"
-zone_size = Vector2(220, 80)
 complete_on_exit = true
+zone_size = Vector2(220, 80)
 
-[node name="PromptJump" type="Area2D" parent="Prompts"]
+[node name="PromptJump" type="Area2D" parent="Prompts" unique_id=2060822554]
 position = Vector2(250, 0)
 script = ExtResource("prompt")
 text = "Espaço   saltar"
-zone_size = Vector2(140, 80)
 completed_by = &"jump"
+zone_size = Vector2(140, 80)
 
-[node name="PromptFlap" type="Area2D" parent="Prompts"]
+[node name="PromptFlap" type="Area2D" parent="Prompts" unique_id=1299962322]
 position = Vector2(420, 0)
 script = ExtResource("prompt")
-text = "No ar, Espaço outra vez\nbater asas"
-zone_size = Vector2(110, 90)
+text = "No ar, Espaço outra vez
+bater asas"
 completed_by = &"flap"
+zone_size = Vector2(110, 90)
 label_offset = Vector2(0, -95)
 
-[node name="PromptPeck" type="Area2D" parent="Prompts"]
+[node name="PromptPeck" type="Area2D" parent="Prompts" unique_id=810715745]
 position = Vector2(735, -40)
 script = ExtResource("prompt")
 text = "E / J   bicar"
-zone_size = Vector2(90, 70)
 completed_by = &"peck_hit"
+zone_size = Vector2(90, 70)
 label_offset = Vector2(0, -80)
 
-[node name="PromptCarry" type="Area2D" parent="Prompts"]
+[node name="PromptCarry" type="Area2D" parent="Prompts" unique_id=545329187]
 position = Vector2(860, 0)
 script = ExtResource("prompt")
-text = "Bica o bacalhau para o levar\nno bico ao gato"
-zone_size = Vector2(150, 80)
+text = "Bica o bacalhau para o levar
+no bico ao gato"
 completed_by = &"give"
+zone_size = Vector2(150, 80)
 label_offset = Vector2(0, -75)
 
-[node name="PromptPush" type="Area2D" parent="Prompts"]
+[node name="PromptPush" type="Area2D" parent="Prompts" unique_id=1341942633]
 position = Vector2(1220, 0)
 script = ExtResource("prompt")
-text = "Bica a caixa para a agarrar\nanda para empurrar / puxar"
-zone_size = Vector2(140, 80)
+text = "Bica a caixa para a agarrar
+anda para empurrar / puxar"
 completed_by = &"grab"
+zone_size = Vector2(140, 80)
 label_offset = Vector2(0, -75)
 
-[node name="PromptLatch" type="Area2D" parent="Prompts"]
+[node name="PromptLatch" type="Area2D" parent="Prompts" unique_id=1776323483]
 position = Vector2(1750, 0)
 script = ExtResource("prompt")
 text = "Bica o trinco"
-zone_size = Vector2(110, 80)
 completed_by = &"peck_hit"
+zone_size = Vector2(110, 80)
 
-[node name="PromptCoo" type="Area2D" parent="Prompts"]
+[node name="PromptCoo" type="Area2D" parent="Prompts" unique_id=774255885]
 position = Vector2(2190, 0)
 script = ExtResource("prompt")
 text = "Q / K   arrulhar"
-zone_size = Vector2(300, 90)
 completed_by = &"coo"
 show_every_time = true
+zone_size = Vector2(300, 90)
 
-[node name="EndSign" type="Label" parent="Prompts"]
+[node name="EndSign" type="Label" parent="Prompts" unique_id=698667463]
 offset_left = 2700.0
 offset_top = -110.0
 offset_right = 3000.0
 offset_bottom = -70.0
 scale = Vector2(0.5, 0.5)
 theme_override_colors/font_color = Color(1, 0.9, 0.8, 1)
-theme_override_constants/outline_size = 6
 theme_override_colors/font_outline_color = Color(0.1, 0.07, 0.05, 0.9)
+theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 18
-text = "Fim da demo · a casa fica para a direita\n(a companheira chama de lá)"
+text = "Fim da demo · a casa fica para a direita
+(a companheira chama de lá)"
 
-[node name="Pigeon" parent="." instance=ExtResource("pigeon")]
-position = Vector2(40, 0)
+[node name="Pigeon" parent="." unique_id=224920845 instance=ExtResource("pigeon")]
+position = Vector2(41, 0)
 
-[node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-script = ExtResource("camera")
+[node name="FollowCamera" type="Camera2D" parent="." unique_id=568089892 node_paths=PackedStringArray("target")]
 position = Vector2(40, -30)
 zoom = Vector2(2.5, 2.5)
 limit_left = -260
 limit_top = -500
 limit_right = 3060
 limit_bottom = 80
+script = ExtResource("camera")
 target = NodePath("../Pigeon")
 
-[node name="Foreground" type="Parallax2D" parent="."]
+[node name="Foreground" type="Parallax2D" parent="." unique_id=1571300402]
 z_index = 20
-scroll_scale = Vector2(1.3, 1.0)
+scroll_scale = Vector2(1.3, 1)
 
-[node name="Posts" type="Node2D" parent="Foreground"]
+[node name="Posts" type="Node2D" parent="Foreground" unique_id=1669157214]
 script = ExtResource("skyline")
 random_seed = 5
 span = Vector2(-300, 4300)
-base_y = 140
+base_y = 140.0
 width_range = Vector2(10, 18)
 height_range = Vector2(230, 300)
 gap_range = Vector2(280, 520)
 color = Color(0.07, 0.06, 0.06, 0.75)
 windows = false
 
-[node name="DemoHUD" parent="." node_paths=PackedStringArray("pigeon", "partner") instance=ExtResource("hud")]
+[node name="DemoHUD" parent="." unique_id=1611308003 node_paths=PackedStringArray("pigeon", "partner") instance=ExtResource("hud")]
 pigeon = NodePath("../Pigeon")
 partner = NodePath("../Props/PartnerCall")
 

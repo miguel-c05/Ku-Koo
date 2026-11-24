@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/Frames/pigeon_hang_01.png" id="1_u0iv3"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/Frames/pigeon_hang_02.png" id="2_22sey"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/Frames/pigeon_hang_03.png" id="3_70xls"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/Frames/pigeon_hang_04.png" id="4_v0fve"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/Frames/pigeon_hang_05.png" id="5_nd5g2"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/Frames/pigeon_hang_06.png" id="6_q45gh"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/Frames/pigeon_hang_07.png" id="7_bngea"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/Frames/pigeon_hang_08.png" id="8_vhwvq"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Pigeon/Frames/pigeon_hang_09.png" id="9_430ek"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_u0iv3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_22sey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_70xls")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_v0fve")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_nd5g2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_q45gh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bngea")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_vhwvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_430ek")
+}],
+"loop": 1,
+"name": &"hang",
+"speed": 8.0
+}]

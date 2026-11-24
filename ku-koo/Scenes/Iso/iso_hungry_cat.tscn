@@ -1,0 +1,64 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Props/hungry_cat.gd" id="1_cat"]
+[ext_resource type="Script" path="res://Scripts/Iso/iso_block.gd" id="2_block"]
+[ext_resource type="Script" path="res://Scripts/Interaction/item_receiver.gd" id="3_recv"]
+[ext_resource type="Script" path="res://Scripts/Interaction/coo_listener.gd" id="4_listen"]
+[ext_resource type="Script" path="res://Scripts/World/speech_bubble.gd" id="5_bubble"]
+[ext_resource type="Script" path="res://Scripts/Audio/event_sound.gd" id="6_sound"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/cat.png" id="7_tex"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/cat_eat.wav" id="8_eat"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/cat_meow.wav" id="9_meow"]
+
+[sub_resource type="CircleShape2D" id="Shape_recv"]
+radius = 22.0
+
+[node name="IsoHungryCat" type="Node2D" node_paths=PackedStringArray("blocker", "sprite", "bubble", "eat_sound", "meow_sound")]
+script = ExtResource("1_cat")
+blocker = NodePath("Blocker")
+sprite = NodePath("Sprite2D")
+bubble = NodePath("Bubble")
+eat_sound = NodePath("EatSound")
+meow_sound = NodePath("MeowSound")
+leave_offset = Vector2(150, -60)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+flip_h = true
+texture = ExtResource("7_tex")
+
+[node name="Blocker" type="AnimatableBody2D" parent="."]
+script = ExtResource("2_block")
+grid_size = Vector2(0.5, 1)
+iso_height = 999.0
+show_placeholder = false
+
+[node name="Receiver" type="Area2D" parent="."]
+script = ExtResource("3_recv")
+accepted_item_id = &"cod"
+prompt = "dar o bacalhau"
+marker_offset = Vector2(0, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Receiver"]
+shape = SubResource("Shape_recv")
+
+[node name="CooListener" type="Node2D" parent="."]
+script = ExtResource("4_listen")
+reaction_delay = 0.3
+
+[node name="Bubble" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("5_bubble")
+anchor = Vector2(0, -24)
+
+[node name="EatSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_eat")
+script = ExtResource("6_sound")
+
+[node name="MeowSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_meow")
+script = ExtResource("6_sound")
+
+[connection signal="received" from="Receiver" to="." method="feed"]
+[connection signal="heard" from="CooListener" to="." method="hear_coo"]

@@ -19,7 +19,7 @@ func _init() -> void:
 
 
 func can_interact(pigeon: Pigeon) -> bool:
-	if not enabled or not pigeon.hold.is_carrying():
+	if not enabled or not pigeon.hold.is_carrying() or not height_ok(pigeon):
 		return false
 	return accepted_item_id == &"" or pigeon.hold.carried.item_id == accepted_item_id
 

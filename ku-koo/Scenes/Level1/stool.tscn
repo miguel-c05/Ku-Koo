@@ -1,0 +1,42 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Interaction/pushable_body.gd" id="1_push"]
+[ext_resource type="Script" path="res://Scripts/Interaction/grab_interactable.gd" id="2_grab"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/stool.png" id="3_tex"]
+[ext_resource type="Script" path="res://Scripts/Audio/event_sound.gd" id="4_sound"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/wood_scrape.wav" id="5_scrape"]
+
+[sub_resource type="RectangleShape2D" id="Shape_body"]
+size = Vector2(66, 55)
+
+[sub_resource type="RectangleShape2D" id="Shape_grab"]
+size = Vector2(84, 24)
+
+[node name="Stool" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_push")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -27.5)
+scale = Vector2(0.4435, 0.4435)
+texture = ExtResource("3_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -27.5)
+shape = SubResource("Shape_body")
+
+[node name="Grab" type="Area2D" parent="."]
+position = Vector2(0, -12)
+script = ExtResource("2_grab")
+prompt = "agarrar o banco"
+marker_offset = Vector2(0, -52)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Grab"]
+shape = SubResource("Shape_grab")
+
+[node name="Scrape" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_scrape")
+script = ExtResource("4_sound")
+
+[connection signal="grabbed" from="." to="Scrape" method="play_event"]

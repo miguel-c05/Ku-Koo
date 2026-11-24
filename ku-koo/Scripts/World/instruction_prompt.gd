@@ -14,6 +14,9 @@ extends Area2D
 ## The [signal Pigeon.action] that completes it (&"jump", &"peck", &"coo"...).
 @export var completed_by: StringName = &""
 @export var show_every_time: bool = false
+## Inactive prompts stay hidden until activate() (e.g. "stay in the shadow"
+## only after the first catch).
+@export var active: bool = true
 ## For prompts with no single completing action: done once the pigeon walks out of the zone.
 @export var complete_on_exit: bool = false
 @export var zone_size: Vector2 = Vector2(120, 80):
@@ -60,7 +63,7 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	var pigeon := body as Pigeon
-	if pigeon == null or (_done and not show_every_time):
+	if pigeon == null or not active or (_done and not show_every_time):
 		return
 	_pigeon = pigeon
 	if not pigeon.action.is_connected(_on_action):
@@ -77,6 +80,19 @@ func _on_body_exited(body: Node2D) -> void:
 	if _pigeon.action.is_connected(_on_action):
 		_pigeon.action.disconnect(_on_action)
 	_pigeon = null
+
+
+## Starts showing the prompt (connect any signal here).
+func activate(_arg: Variant = null) -> void:
+	active = true
+	for body in get_overlapping_bodies():
+		_on_body_entered(body)
+
+
+## Marks the prompt as done and fades it (connect any signal here).
+func complete(_arg: Variant = null) -> void:
+	_done = true
+	_fade(0.0, 0.8)
 
 
 func _on_action(action_name: StringName) -> void:

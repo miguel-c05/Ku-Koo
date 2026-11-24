@@ -19,6 +19,10 @@ const INTERACTABLE_LAYER := 1 << 4
 	set(value):
 		enabled = value
 		queue_redraw()
+## Height of the peck point above the ground. Only used by pigeons that
+## have a height (top-down camera); the side view ignores it.
+@export var height: float = 0.0
+@export var height_tolerance: float = 18.0
 ## Short verb shown in the debug HUD when focused ("bicar", "agarrar"...).
 @export var prompt: String = "bicar"
 
@@ -43,7 +47,18 @@ func _process(_delta: float) -> void:
 
 
 func can_interact(pigeon: Pigeon) -> bool:
-	return enabled and not pigeon.hold.is_busy()
+	return enabled and not pigeon.hold.is_busy() and height_ok(pigeon)
+
+
+## Top-down only: the beak must be at about the right height.
+func height_ok(pigeon: Pigeon) -> bool:
+	if not pigeon.has_method(&"get_beak_height"):
+		return true
+	return absf(pigeon.call(&"get_beak_height") - get_peck_height()) <= height_tolerance
+
+
+func get_peck_height() -> float:
+	return height
 
 
 func interact(pigeon: Pigeon) -> void:

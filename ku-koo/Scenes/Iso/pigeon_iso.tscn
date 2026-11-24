@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://Scenes/Pigeon/pigeon.tscn" id="1_base"]
+[ext_resource type="Script" path="res://Scripts/Iso/pigeon_top_down.gd" id="2_topdown"]
+[ext_resource type="Script" path="res://Scripts/Iso/iso_shadow.gd" id="3_shadow"]
+
+[sub_resource type="CircleShape2D" id="Shape_feet"]
+radius = 6.0
+
+[node name="PigeonIso" instance=ExtResource("1_base")]
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("2_topdown")
+walk_speed = 110.0
+jump_velocity = -230.0
+flap_velocity = -200.0
+gravity = 900.0
+glide_gravity_scale = 0.35
+glide_max_fall_speed = 60.0
+
+[node name="Shadow" type="Node2D" parent="." index="0"]
+script = ExtResource("3_shadow")
+
+[node name="CollisionShape2D" parent="."]
+position = Vector2(0, 0)
+shape = SubResource("Shape_feet")
+
+[node name="CooRing" parent="Visuals"]
+position = Vector2(0, 0)
+scale = Vector2(1, 0.5)

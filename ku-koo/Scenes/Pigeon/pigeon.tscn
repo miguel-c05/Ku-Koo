@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_leg.png" id="16_leg"]
 [ext_resource type="Texture2D" path="res://Assets/Sprites/Placeholders/pigeon_foot_string.png" id="17_string"]
 [ext_resource type="SpriteFrames" path="res://Assets/Sprites/Pigeon/pigeon_frames.tres" id="18_frames"]
+[ext_resource type="SpriteFrames" path="res://Assets/Sprites/Pigeon/pigeon_hang_frames.tres" id="19_hang"]
 
 [sub_resource type="RectangleShape2D" id="Shape_body"]
 size = Vector2(18, 18)
@@ -35,10 +36,11 @@ script = ExtResource("1_pigeon")
 position = Vector2(0, -9)
 shape = SubResource("Shape_body")
 
-[node name="Visuals" type="Node2D" parent="." node_paths=PackedStringArray("pigeon", "animated_sprite", "rig", "body", "head", "wing", "coo_ring", "bubble")]
+[node name="Visuals" type="Node2D" parent="." node_paths=PackedStringArray("pigeon", "animated_sprite", "hang_sprite", "rig", "body", "head", "wing", "coo_ring", "bubble")]
 script = ExtResource("2_visuals")
 pigeon = NodePath("..")
 animated_sprite = NodePath("AnimatedSprite2D")
+hang_sprite = NodePath("HangSprite")
 rig = NodePath("Rig")
 body = NodePath("Rig/Body")
 head = NodePath("Rig/Head")
@@ -95,7 +97,15 @@ scale = Vector2(0.22, 0.22)
 sprite_frames = ExtResource("18_frames")
 animation = &"idle"
 centered = false
-offset = Vector2(-124, -163)
+offset = Vector2(-137, -219)
+
+[node name="HangSprite" type="AnimatedSprite2D" parent="Visuals"]
+visible = false
+scale = Vector2(0.22, 0.22)
+sprite_frames = ExtResource("19_hang")
+animation = &"hang"
+centered = false
+offset = Vector2(-100, -4)
 
 [node name="CooRing" type="Node2D" parent="Visuals"]
 position = Vector2(0, -12)

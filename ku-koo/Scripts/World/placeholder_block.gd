@@ -22,6 +22,11 @@ extends AnimatableBody2D
 		queue_redraw()
 ## Thin lighter line on top, so walkable surfaces read clearly.
 @export var top_highlight: bool = true
+## Only solid from above: jump up through it, land on top (seats, shelves).
+@export var one_way: bool = false
+## Starts without collision when false (e.g. a passage that closes later:
+## call [method make_solid]).
+@export var solid: bool = true
 
 var _shape_node: CollisionShape2D
 
@@ -29,8 +34,11 @@ var _shape_node: CollisionShape2D
 func _ready() -> void:
 	_shape_node = CollisionShape2D.new()
 	_shape_node.shape = RectangleShape2D.new()
+	_shape_node.one_way_collision = one_way
 	add_child(_shape_node, false, Node.INTERNAL_MODE_FRONT)
 	_update_shape()
+	if not solid and not Engine.is_editor_hint():
+		_shape_node.disabled = true
 
 
 func _update_shape() -> void:
@@ -43,6 +51,11 @@ func _update_shape() -> void:
 ## Turns collision on/off (e.g. an obstacle that goes away).
 func set_solid(value: bool) -> void:
 	_shape_node.set_deferred(&"disabled", not value)
+
+
+## For signals: closes it (e.g. once the pigeon is through a passage).
+func make_solid(_arg: Variant = null) -> void:
+	set_solid(true)
 
 
 func _draw() -> void:

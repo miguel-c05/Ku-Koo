@@ -10,6 +10,8 @@ extends CanvasLayer
 @export var status_label: Label
 @export var partner_cue: Label
 @export var show_status: bool = true
+## Replaces the controls legend when not empty (each demo has its own).
+@export_multiline var help_text: String = ""
 
 const STATE_NAMES := {
 	Pigeon.State.IDLE: "parado",
@@ -18,6 +20,7 @@ const STATE_NAMES := {
 	Pigeon.State.PECK: "a bicar",
 	Pigeon.State.COO: "a arrulhar",
 	Pigeon.State.PUSH: "a empurrar/puxar",
+	Pigeon.State.HANG: "pendurado",
 }
 
 var _cue_tween: Tween
@@ -25,6 +28,8 @@ var _cue_tween: Tween
 
 func _ready() -> void:
 	partner_cue.modulate.a = 0.0
+	if help_text != "":
+		help_label.text = help_text
 	if partner:
 		partner.called.connect(_on_partner_called)
 

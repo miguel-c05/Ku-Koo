@@ -1,0 +1,864 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Level1/level_1_butchery.gd" id="level"]
+[ext_resource type="Script" path="res://Scripts/World/placeholder_block.gd" id="block"]
+[ext_resource type="Script" path="res://Scripts/Level1/swing_door.gd" id="door"]
+[ext_resource type="Script" path="res://Scripts/Level1/hanging_string.gd" id="string"]
+[ext_resource type="Script" path="res://Scripts/Level1/pull_cord.gd" id="cord"]
+[ext_resource type="Script" path="res://Scripts/Interaction/grab_interactable.gd" id="grab"]
+[ext_resource type="Script" path="res://Scripts/Interaction/toggle_interactable.gd" id="toggle"]
+[ext_resource type="Script" path="res://Scripts/Level1/checkpoint_nest.gd" id="s_nest"]
+[ext_resource type="Script" path="res://Scripts/Level1/light_zone.gd" id="light"]
+[ext_resource type="Script" path="res://Scripts/Level1/hiding_spot.gd" id="hide"]
+[ext_resource type="Script" path="res://Scripts/Level1/hunter.gd" id="hunter"]
+[ext_resource type="Script" path="res://Scripts/World/instruction_prompt.gd" id="prompt"]
+[ext_resource type="Script" path="res://Scripts/World/follow_camera.gd" id="camera"]
+[ext_resource type="Script" path="res://Scripts/Audio/event_sound.gd" id="sound"]
+[ext_resource type="Script" path="res://Scripts/World/fly_swarm.gd" id="flies"]
+[ext_resource type="Script" path="res://Scripts/Level1/level_room.gd" id="room"]
+[ext_resource type="Script" path="res://Scripts/Level1/room_passage.gd" id="passage"]
+[ext_resource type="Script" path="res://Scripts/World/foreground_sway.gd" id="sway"]
+[ext_resource type="Script" path="res://Scripts/World/room_shade.gd" id="shade"]
+[ext_resource type="Script" path="res://Scripts/World/trigger_zone.gd" id="trigger"]
+[ext_resource type="PackedScene" path="res://Scenes/Pigeon/pigeon.tscn" id="pigeon"]
+[ext_resource type="PackedScene" path="res://Scenes/Level1/stool.tscn" id="stool"]
+[ext_resource type="PackedScene" path="res://Scenes/World/partner_call.tscn" id="partner"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/demo_hud.tscn" id="hud"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Rooms/r1_hanging_room.png" id="t_r1"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Rooms/r2_door_hallway.png" id="t_r2"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Rooms/r3_weapons_room.png" id="t_r3"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Rooms/r4_hunter_hallway.png" id="t_r4"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Rooms/r4_workroom_beyond.png" id="t_r4_beyond"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Rooms/r5_entrance_dark.png" id="t_r5"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Rooms/r5_entrance_light.png" id="t_r5_light"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/door_closed.png" id="t_door_closed"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/crate.png" id="t_crate"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/barrel.png" id="t_barrel"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/basket.png" id="t_basket"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/nest.png" id="t_nest"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/shelf_broken.png" id="t_shelf_broken"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/hanging_pigeon.png" id="t_hanging_pigeon"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/shutter.png" id="t_shutter"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/shutter_hint.png" id="t_shutter_hint"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/hanging_rabbit_fg.png" id="t_rabbit_fg"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/hanging_hare_fg.png" id="t_hare_fg"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/hanging_birds_fg.png" id="t_birds_fg"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/fly.png" id="t_fly"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/contact_shadow.png" id="t_shadow"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Props/wall_post.png" id="t_wall_post"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/light_shaft_dust_01.png" id="t_shaft1"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/light_shaft_dust_02.png" id="t_shaft2"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/light_shaft_dust_03.png" id="t_shaft3"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/light_shaft_dust_04.png" id="t_shaft4"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/light_shaft_dust_05.png" id="t_shaft5"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/light_shaft_dust_06.png" id="t_shaft6"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/warm_light_pool_01.png" id="t_pool1"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/warm_light_pool_02.png" id="t_pool2"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Level1/Effects/warm_light_pool_03.png" id="t_pool3"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/cleaver_chop.wav" id="cleaver_chop"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/caught_sting.wav" id="caught_sting"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/door_creak.wav" id="door_creak"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/rope_creak.wav" id="rope_creak"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/shutter_open.wav" id="shutter_open"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/latch_lift.wav" id="latch_lift"]
+[ext_resource type="AudioStream" path="res://Assets/Audios/Placeholders/hunter_step.wav" id="hunter_step"]
+
+[sub_resource type="CircleShape2D" id="Shape_cord"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="Shape_shutter"]
+radius = 16.0
+
+[sub_resource type="SpriteFrames" id="Frames_shaft"]
+animations = [{"frames": [{"duration": 1.0, "texture": ExtResource("t_shaft1")}, {"duration": 1.0, "texture": ExtResource("t_shaft2")}, {"duration": 1.0, "texture": ExtResource("t_shaft3")}, {"duration": 1.0, "texture": ExtResource("t_shaft4")}, {"duration": 1.0, "texture": ExtResource("t_shaft5")}, {"duration": 1.0, "texture": ExtResource("t_shaft6")}], "loop": true, "name": &"default", "speed": 2.0}]
+
+[node name="Level1Butchery" type="Node2D" node_paths=PackedStringArray("pigeon", "camera", "partner", "first_nest", "fade", "end_label", "caught_sound", "daylight", "exit_point", "shutter_sprite", "first_room")]
+texture_filter = 2
+script = ExtResource("level")
+pigeon = NodePath("Pigeon")
+camera = NodePath("FollowCamera")
+partner = NodePath("PartnerCall")
+first_nest = NodePath("HangingRoom/CrateNest")
+fade = NodePath("Overlay/Fade")
+end_label = NodePath("Overlay/EndLabel")
+caught_sound = NodePath("HunterHallway/CaughtSound")
+daylight = NodePath("Entrance/Daylight")
+exit_point = NodePath("Entrance/ExitPoint")
+shutter_sprite = NodePath("Entrance/Shutter")
+shutter_texture = ExtResource("t_shutter")
+shutter_hint_texture = ExtResource("t_shutter_hint")
+first_room = NodePath("HangingRoom")
+
+[node name="HangingRoom" type="Node2D" parent="."]
+position = Vector2(0.0, 0)
+script = ExtResource("room")
+room_size = Vector2(725.8, 408.2)
+floor_depth = 353.43
+segment = 0
+
+[node name="Painting" type="Sprite2D" parent="HangingRoom"]
+position = Vector2(0.0, -353.43)
+scale = Vector2(0.378, 0.378)
+z_index = -50
+texture = ExtResource("t_r1")
+centered = false
+
+[node name="Floor" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(-20, 0)
+script = ExtResource("block")
+size = Vector2(765.8, 60)
+show_placeholder = false
+
+[node name="Ceiling" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(-20, -393.4)
+script = ExtResource("block")
+size = Vector2(765.8, 40)
+show_placeholder = false
+
+[node name="LeftWall" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(-40, -393.4)
+script = ExtResource("block")
+size = Vector2(44, 393.4)
+show_placeholder = false
+
+[node name="Entry" type="Marker2D" parent="HangingRoom"]
+position = Vector2(62.37, 0.0)
+
+[node name="DoorHallway" type="Node2D" parent="."]
+position = Vector2(703.08, 0)
+script = ExtResource("room")
+room_size = Vector2(725.8, 408.2)
+floor_depth = 360.99
+segment = 0
+
+[node name="Painting" type="Sprite2D" parent="DoorHallway"]
+position = Vector2(0.0, -360.99)
+scale = Vector2(0.378, 0.378)
+z_index = -50
+texture = ExtResource("t_r2")
+centered = false
+
+[node name="Floor" type="AnimatableBody2D" parent="DoorHallway"]
+position = Vector2(-20, 0)
+script = ExtResource("block")
+size = Vector2(765.8, 60)
+show_placeholder = false
+
+[node name="Ceiling" type="AnimatableBody2D" parent="DoorHallway"]
+position = Vector2(-20, -401.0)
+script = ExtResource("block")
+size = Vector2(765.8, 40)
+show_placeholder = false
+
+[node name="RightWall" type="AnimatableBody2D" parent="DoorHallway"]
+position = Vector2(720.1, -401.0)
+script = ExtResource("block")
+size = Vector2(44, 401.0)
+show_placeholder = false
+
+[node name="Entry" type="Marker2D" parent="DoorHallway"]
+position = Vector2(62.37, 0.0)
+
+[node name="WeaponsRoom" type="Node2D" parent="."]
+position = Vector2(2000.0, 0)
+script = ExtResource("room")
+room_size = Vector2(725.8, 408.2)
+floor_depth = 362.88
+segment = 1
+
+[node name="Painting" type="Sprite2D" parent="WeaponsRoom"]
+position = Vector2(0.0, -362.88)
+scale = Vector2(0.378, 0.378)
+z_index = -50
+texture = ExtResource("t_r3")
+centered = false
+
+[node name="Floor" type="AnimatableBody2D" parent="WeaponsRoom"]
+position = Vector2(-20, 0)
+script = ExtResource("block")
+size = Vector2(765.8, 60)
+show_placeholder = false
+
+[node name="Ceiling" type="AnimatableBody2D" parent="WeaponsRoom"]
+position = Vector2(-20, -402.9)
+script = ExtResource("block")
+size = Vector2(765.8, 40)
+show_placeholder = false
+
+[node name="LeftWall" type="AnimatableBody2D" parent="WeaponsRoom"]
+position = Vector2(-40, -402.9)
+script = ExtResource("block")
+size = Vector2(44, 402.9)
+show_placeholder = false
+
+[node name="Entry" type="Marker2D" parent="WeaponsRoom"]
+position = Vector2(62.37, 0.0)
+
+[node name="HunterHallway" type="Node2D" parent="."]
+position = Vector2(2703.08, 0)
+script = ExtResource("room")
+room_size = Vector2(725.8, 408.2)
+floor_depth = 360.99
+segment = 1
+
+[node name="Painting" type="Sprite2D" parent="HunterHallway"]
+position = Vector2(0.0, -360.99)
+scale = Vector2(0.378, 0.378)
+z_index = -50
+texture = ExtResource("t_r4")
+centered = false
+
+[node name="Floor" type="AnimatableBody2D" parent="HunterHallway"]
+position = Vector2(-20, 0)
+script = ExtResource("block")
+size = Vector2(765.8, 60)
+show_placeholder = false
+
+[node name="Ceiling" type="AnimatableBody2D" parent="HunterHallway"]
+position = Vector2(-20, -401.0)
+script = ExtResource("block")
+size = Vector2(765.8, 40)
+show_placeholder = false
+
+[node name="Entry" type="Marker2D" parent="HunterHallway"]
+position = Vector2(62.37, 0.0)
+
+[node name="Entrance" type="Node2D" parent="."]
+position = Vector2(3406.16, 0)
+script = ExtResource("room")
+room_size = Vector2(725.8, 408.2)
+floor_depth = 360.99
+segment = 1
+
+[node name="Painting" type="Sprite2D" parent="Entrance"]
+position = Vector2(0.0, -360.99)
+scale = Vector2(0.378, 0.378)
+z_index = -50
+texture = ExtResource("t_r5")
+centered = false
+
+[node name="Floor" type="AnimatableBody2D" parent="Entrance"]
+position = Vector2(-20, 0)
+script = ExtResource("block")
+size = Vector2(765.8, 60)
+show_placeholder = false
+
+[node name="Ceiling" type="AnimatableBody2D" parent="Entrance"]
+position = Vector2(-20, -401.0)
+script = ExtResource("block")
+size = Vector2(765.8, 40)
+show_placeholder = false
+
+[node name="RightWall" type="AnimatableBody2D" parent="Entrance"]
+position = Vector2(720.1, -401.0)
+script = ExtResource("block")
+size = Vector2(44, 401.0)
+show_placeholder = false
+
+[node name="Entry" type="Marker2D" parent="Entrance"]
+position = Vector2(62.37, 0.0)
+
+[node name="Barrel" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(80.14, -130.41)
+script = ExtResource("block")
+size = Vector2(88.45, 130.41)
+show_placeholder = false
+one_way = true
+
+[node name="SackOnBarrel" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(106.6, -168.97)
+script = ExtResource("block")
+size = Vector2(48.38, 38.56)
+show_placeholder = false
+one_way = true
+
+[node name="SmallSack" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(543.19, -38.93)
+script = ExtResource("block")
+size = Vector2(23.81, 38.93)
+show_placeholder = false
+one_way = true
+
+[node name="LowerCrate" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(580.23, -68.04)
+script = ExtResource("block")
+size = Vector2(66.91, 68.04)
+show_placeholder = false
+one_way = true
+
+[node name="UpperCrate" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(601.02, -139.86)
+script = ExtResource("block")
+size = Vector2(64.26, 71.82)
+show_placeholder = false
+one_way = true
+
+[node name="ChairSeat" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(424.12, -46.49)
+script = ExtResource("block")
+size = Vector2(55.94, 5.29)
+show_placeholder = false
+one_way = true
+
+[node name="HangingString" type="Node2D" parent="HangingRoom" node_paths=PackedStringArray("pigeon", "creak_sound")]
+position = Vector2(124.74, -323.19)
+script = ExtResource("string")
+pigeon = NodePath("../../Pigeon")
+creak_sound = NodePath("Creak")
+length = 59.0
+release_offset = 14.0
+break_angle_degrees = 25.0
+max_angle_degrees = 40.0
+string_color = Color(0.85, 0.62, 0.4, 1.0)
+
+[node name="Creak" type="AudioStreamPlayer2D" parent="HangingRoom/HangingString"]
+position = Vector2(0, 0)
+stream = ExtResource("rope_creak")
+script = ExtResource("sound")
+
+[node name="HangingPigeon" type="Sprite2D" parent="HangingRoom"]
+position = Vector2(554.9, -240.03)
+scale = Vector2(0.378, 0.378)
+z_index = -49
+texture = ExtResource("t_hanging_pigeon")
+centered = false
+
+[node name="Flies" type="Node2D" parent="HangingRoom"]
+position = Vector2(574.56, -194.67)
+z_index = 2
+script = ExtResource("flies")
+texture = ExtResource("t_fly")
+area = Vector2(40, 30)
+fly_scale = 0.05
+
+[node name="Flies2" type="Node2D" parent="HangingRoom"]
+position = Vector2(249.48, -202.23)
+z_index = 2
+script = ExtResource("flies")
+texture = ExtResource("t_fly")
+area = Vector2(50, 30)
+fly_scale = 0.05
+count = 4
+
+[node name="CrateNest" type="Area2D" parent="HangingRoom"]
+position = Vector2(633.15, -139.86)
+script = ExtResource("s_nest")
+texture = ExtResource("t_nest")
+texture_scale = 0.1
+
+[node name="Foreground" type="Node2D" parent="HangingRoom"]
+z_index = 30
+
+[node name="Rabbit" type="Node2D" parent="HangingRoom/Foreground"]
+position = Vector2(26.46, -364.77)
+script = ExtResource("sway")
+amplitude_degrees = 2.5
+period = 3.8
+phase = 0.0
+
+[node name="Art" type="Sprite2D" parent="HangingRoom/Foreground/Rabbit"]
+scale = Vector2(0.4398, 0.4398)
+texture = ExtResource("t_rabbit_fg")
+offset = Vector2(-90, 0)
+centered = false
+modulate = Color(0.2, 0.16, 0.14, 1.0)
+
+[node name="Birds" type="Node2D" parent="HangingRoom/Foreground"]
+position = Vector2(351.54, -364.77)
+script = ExtResource("sway")
+amplitude_degrees = 3.5
+period = 3.1
+phase = 1.7
+
+[node name="Art" type="Sprite2D" parent="HangingRoom/Foreground/Birds"]
+scale = Vector2(0.3088, 0.3088)
+texture = ExtResource("t_birds_fg")
+offset = Vector2(-90, 0)
+centered = false
+modulate = Color(0.2, 0.16, 0.14, 1.0)
+
+[node name="Hare" type="Node2D" parent="HangingRoom/Foreground"]
+position = Vector2(638.82, -364.77)
+script = ExtResource("sway")
+amplitude_degrees = 2.0
+period = 4.4
+phase = 3.4
+
+[node name="Art" type="Sprite2D" parent="HangingRoom/Foreground/Hare"]
+scale = Vector2(0.393, 0.393)
+texture = ExtResource("t_hare_fg")
+offset = Vector2(-90, 0)
+centered = false
+modulate = Color(0.2, 0.16, 0.14, 1.0)
+
+[node name="Ledge" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(669.82, -172.75)
+script = ExtResource("block")
+size = Vector2(63.5, 4)
+show_placeholder = false
+one_way = true
+
+[node name="WallBelow" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(713.66, -168.75)
+script = ExtResource("block")
+size = Vector2(12.1, 172.75)
+show_placeholder = false
+
+[node name="WallAbove" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(713.66, -420)
+script = ExtResource("block")
+size = Vector2(12.1, 177.32)
+show_placeholder = false
+
+[node name="TunnelPlug" type="AnimatableBody2D" parent="HangingRoom"]
+position = Vector2(717.29, -242.68)
+script = ExtResource("block")
+size = Vector2(4.84, 69.93)
+show_placeholder = false
+solid = false
+
+[node name="Shade" type="Node2D" parent="HangingRoom"]
+position = Vector2(-10, -363.43)
+z_index = 40
+script = ExtResource("shade")
+size = Vector2(713.08, 428.2)
+feather = 50.0
+
+[node name="TableTop" type="AnimatableBody2D" parent="DoorHallway"]
+position = Vector2(28.35, -109.62)
+script = ExtResource("block")
+size = Vector2(255.15, 5.67)
+show_placeholder = false
+one_way = true
+
+[node name="BucketRim" type="AnimatableBody2D" parent="DoorHallway"]
+position = Vector2(374.22, -51.03)
+script = ExtResource("block")
+size = Vector2(55.19, 3.78)
+show_placeholder = false
+one_way = true
+
+[node name="ThroughTunnel" type="Area2D" parent="DoorHallway"]
+position = Vector2(90.72, 0.0)
+script = ExtResource("trigger")
+zone_size = Vector2(30, 400)
+
+[node name="DoorClosed" type="Sprite2D" parent="DoorHallway"]
+position = Vector2(469.1, -338.69)
+scale = Vector2(0.378, 0.378)
+z_index = -49
+texture = ExtResource("t_door_closed")
+centered = false
+
+[node name="Door" type="AnimatableBody2D" parent="DoorHallway" node_paths=PackedStringArray("visual")]
+position = Vector2(529.2, -247.59)
+script = ExtResource("door")
+size = Vector2(4, 4)
+show_placeholder = false
+blocks_when_closed = false
+visual_fades = true
+open_time = 0.9
+visual = NodePath("../DoorClosed")
+
+[node name="Creak" type="AudioStreamPlayer2D" parent="DoorHallway/Door"]
+position = Vector2(0, 0)
+stream = ExtResource("door_creak")
+script = ExtResource("sound")
+
+[node name="CrateUnderCord" type="AnimatableBody2D" parent="DoorHallway"]
+position = Vector2(535.25, -51.03)
+script = ExtResource("block")
+size = Vector2(56.7, 51.03)
+show_placeholder = false
+one_way = true
+
+[node name="CrateArt" type="Sprite2D" parent="DoorHallway"]
+position = Vector2(532.22, -54.05)
+scale = Vector2(0.27, 0.27)
+z_index = -5
+texture = ExtResource("t_crate")
+centered = false
+modulate = Color(0.68, 0.64, 0.6, 1.0)
+
+[node name="LatchAnchor" type="Marker2D" parent="DoorHallway"]
+position = Vector2(587.79, -215.46)
+
+[node name="LatchCord" type="CharacterBody2D" parent="DoorHallway" node_paths=PackedStringArray("anchor")]
+position = Vector2(567.0, -66.15)
+script = ExtResource("cord")
+anchor = NodePath("../LatchAnchor")
+color = Color(0.72, 0.52, 0.34, 1.0)
+width = 2.5
+pull_distance = 24.0
+
+[node name="Grab" type="Area2D" parent="DoorHallway/LatchCord"]
+script = ExtResource("grab")
+max_height_difference = 30.0
+prompt = "puxar a corda"
+marker_offset = Vector2(0, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorHallway/LatchCord/Grab"]
+shape = SubResource("Shape_cord")
+
+[node name="LatchSound" type="AudioStreamPlayer2D" parent="DoorHallway/LatchCord"]
+position = Vector2(0, 0)
+stream = ExtResource("latch_lift")
+script = ExtResource("sound")
+
+[node name="Doorway" type="Area2D" parent="DoorHallway" node_paths=PackedStringArray("entry")]
+position = Vector2(565.11, 0.0)
+script = ExtResource("passage")
+zone_size = Vector2(60.9, 80)
+entry = NodePath("../../WeaponsRoom/Entry")
+enabled = false
+require_action = &"enter_door"
+
+[node name="Basket" type="Sprite2D" parent="WeaponsRoom"]
+position = Vector2(555.66, 0.0)
+scale = Vector2(0.3, 0.3)
+z_index = -5
+texture = ExtResource("t_basket")
+centered = true
+offset = Vector2(0, -70)
+
+[node name="BasketTop" type="AnimatableBody2D" parent="WeaponsRoom"]
+position = Vector2(533.66, -40.0)
+script = ExtResource("block")
+size = Vector2(44, 4)
+show_placeholder = false
+one_way = true
+
+[node name="Flies" type="Node2D" parent="WeaponsRoom"]
+position = Vector2(385.56, -151.2)
+z_index = 2
+script = ExtResource("flies")
+texture = ExtResource("t_fly")
+area = Vector2(60, 40)
+fly_scale = 0.05
+count = 6
+
+[node name="WorkroomBeyond" type="Sprite2D" parent="HunterHallway"]
+position = Vector2(-140.99, -297.48)
+scale = Vector2(0.3024, 0.3024)
+z_index = -60
+texture = ExtResource("t_r4_beyond")
+centered = false
+
+[node name="Hunter" type="Node2D" parent="HunterHallway" node_paths=PackedStringArray("pigeon", "chop_sound", "turn_sound")]
+position = Vector2(164.43, -7.0)
+scale = Vector2(0.8, 0.8)
+z_index = -55
+script = ExtResource("hunter")
+pigeon = NodePath("../../Pigeon")
+chop_sound = NodePath("Chop")
+turn_sound = NodePath("Turn")
+zone_group = &"light_zones"
+chop_time = Vector2(2.2, 3.2)
+look_time = 1.8
+
+[node name="Chop" type="AudioStreamPlayer2D" parent="HunterHallway/Hunter"]
+position = Vector2(40, -80)
+stream = ExtResource("cleaver_chop")
+script = ExtResource("sound")
+
+[node name="Turn" type="AudioStreamPlayer2D" parent="HunterHallway/Hunter"]
+position = Vector2(0, 0)
+stream = ExtResource("hunter_step")
+script = ExtResource("sound")
+
+[node name="CaughtSound" type="AudioStreamPlayer2D" parent="HunterHallway"]
+position = Vector2(164.43, -96.39)
+stream = ExtResource("caught_sting")
+script = ExtResource("sound")
+
+[node name="Nest" type="Area2D" parent="HunterHallway"]
+position = Vector2(45.36, 0.0)
+script = ExtResource("s_nest")
+texture = ExtResource("t_nest")
+texture_scale = 0.1
+zone_size = Vector2(60, 50)
+
+[node name="BrokenShelf" type="Sprite2D" parent="HunterHallway"]
+position = Vector2(453.6, -153.85)
+scale = Vector2(0.3969, 0.3969)
+z_index = -49
+texture = ExtResource("t_shelf_broken")
+centered = false
+modulate = Color(0.55, 0.45, 0.4, 1.0)
+
+[node name="BarrelTop" type="AnimatableBody2D" parent="HunterHallway"]
+position = Vector2(491.4, -62.37)
+script = ExtResource("block")
+size = Vector2(41.58, 3.78)
+show_placeholder = false
+one_way = true
+
+[node name="BrokenShelfTop" type="AnimatableBody2D" parent="HunterHallway"]
+position = Vector2(458.14, -145.53)
+script = ExtResource("block")
+size = Vector2(137.21, 3.78)
+show_placeholder = false
+one_way = true
+
+[node name="WallShelf" type="AnimatableBody2D" parent="HunterHallway"]
+position = Vector2(265.36, -220.37)
+script = ExtResource("block")
+size = Vector2(149.69, 3.78)
+show_placeholder = false
+one_way = true
+
+[node name="Light1" type="Area2D" parent="HunterHallway"]
+position = Vector2(94.5, 0.0)
+z_index = -20
+script = ExtResource("light")
+size = Vector2(198.4, 50)
+pool_frames = Array[Texture2D]([ExtResource("t_pool1"), ExtResource("t_pool2"), ExtResource("t_pool3")])
+pool_rect = Rect2(-30, -70, 258.4, 100)
+color = Color(1, 0.75, 0.45, 0.18)
+
+[node name="Light2" type="Area2D" parent="HunterHallway"]
+position = Vector2(353.43, 0.0)
+z_index = -20
+script = ExtResource("light")
+size = Vector2(141.8, 50)
+pool_frames = Array[Texture2D]([ExtResource("t_pool1"), ExtResource("t_pool2"), ExtResource("t_pool3")])
+pool_rect = Rect2(-30, -70, 201.8, 100)
+color = Color(1, 0.75, 0.45, 0.18)
+
+[node name="Light3" type="Area2D" parent="HunterHallway"]
+position = Vector2(529.2, 0.0)
+z_index = -20
+script = ExtResource("light")
+size = Vector2(98.3, 50)
+pool_frames = Array[Texture2D]([ExtResource("t_pool1"), ExtResource("t_pool2"), ExtResource("t_pool3")])
+pool_rect = Rect2(-30, -70, 158.3, 100)
+color = Color(1, 0.75, 0.45, 0.18)
+
+[node name="BehindBucket" type="Area2D" parent="HunterHallway"]
+position = Vector2(322.81, 0.0)
+script = ExtResource("hide")
+size = Vector2(54, 40)
+
+[node name="BarrelShadow" type="Sprite2D" parent="HunterHallway"]
+position = Vector2(518.62, 1.13)
+scale = Vector2(0.27, 0.2)
+z_index = -6
+texture = ExtResource("t_shadow")
+centered = true
+modulate = Color(1, 1, 1, 0.85)
+
+[node name="Barrel" type="Sprite2D" parent="HunterHallway"]
+position = Vector2(512.19, 0.0)
+scale = Vector2(0.31, 0.31)
+z_index = -5
+texture = ExtResource("t_barrel")
+centered = true
+offset = Vector2(0, -105)
+modulate = Color(0.6, 0.55, 0.52, 1.0)
+
+[node name="BehindBarrel" type="Area2D" parent="HunterHallway"]
+position = Vector2(512.19, 0.0)
+script = ExtResource("hide")
+size = Vector2(48, 40)
+
+[node name="SeamPost" type="Sprite2D" parent="HunterHallway"]
+position = Vector2(-4.16, -360.99)
+scale = Vector2(0.378, 0.378)
+z_index = -49
+texture = ExtResource("t_wall_post")
+centered = false
+
+[node name="Daylight" type="Node2D" parent="Entrance"]
+z_index = -48
+
+[node name="LitRoom" type="Sprite2D" parent="Entrance/Daylight"]
+position = Vector2(0.0, -360.99)
+scale = Vector2(0.378, 0.378)
+z_index = 0
+texture = ExtResource("t_r5_light")
+centered = false
+
+[node name="Shaft" type="AnimatedSprite2D" parent="Entrance/Daylight"]
+position = Vector2(158.0, -247.59)
+scale = Vector2(0.283, 0.283)
+centered = false
+offset = Vector2(-225, 0)
+sprite_frames = SubResource("Frames_shaft")
+autoplay = "default"
+modulate = Color(1, 1, 1, 0.8)
+
+[node name="TableTop" type="AnimatableBody2D" parent="Entrance"]
+position = Vector2(15.12, -109.62)
+script = ExtResource("block")
+size = Vector2(266.49, 5.67)
+show_placeholder = false
+one_way = true
+
+[node name="WindowSill" type="AnimatableBody2D" parent="Entrance"]
+position = Vector2(113.4, -134.19)
+script = ExtResource("block")
+size = Vector2(89.59, 4.54)
+show_placeholder = false
+one_way = true
+
+[node name="ChairSeat" type="AnimatableBody2D" parent="Entrance"]
+position = Vector2(393.12, -73.71)
+script = ExtResource("block")
+size = Vector2(77.49, 4.54)
+show_placeholder = false
+one_way = true
+
+[node name="ChairBack" type="AnimatableBody2D" parent="Entrance"]
+position = Vector2(402.57, -161.41)
+script = ExtResource("block")
+size = Vector2(63.13, 3.78)
+show_placeholder = false
+one_way = true
+
+[node name="CoatShelf" type="AnimatableBody2D" parent="Entrance"]
+position = Vector2(318.28, -241.54)
+script = ExtResource("block")
+size = Vector2(141.37, 3.78)
+show_placeholder = false
+one_way = true
+
+[node name="Stool" parent="Entrance" instance=ExtResource("stool")]
+position = Vector2(540.54, 0.0)
+modulate = Color(0.78, 0.74, 0.7, 1.0)
+
+[node name="Shutter" type="Sprite2D" parent="Entrance"]
+position = Vector2(117.18, -251.37)
+scale = Vector2(0.0828, 0.1046)
+z_index = -40
+texture = ExtResource("t_shutter")
+centered = false
+modulate = Color(0.72, 0.68, 0.64, 1.0)
+
+[node name="ShutterPush" type="Area2D" parent="Entrance"]
+position = Vector2(177.66, -149.31)
+script = ExtResource("toggle")
+prompt = "empurrar a portada"
+marker_offset = Vector2(0, -36)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance/ShutterPush"]
+shape = SubResource("Shape_shutter")
+
+[node name="ShutterSound" type="AudioStreamPlayer2D" parent="Entrance"]
+position = Vector2(158.0, -190.89)
+stream = ExtResource("shutter_open")
+script = ExtResource("sound")
+
+[node name="ExitPoint" type="Marker2D" parent="Entrance"]
+position = Vector2(158.0, -164.43)
+
+[node name="PromptSwing" type="Area2D" parent="HangingRoom"]
+position = Vector2(241.92, 0.0)
+script = ExtResource("prompt")
+text = "A / D   baloiçar"
+zone_size = Vector2(320, 420)
+z_index = 50
+label_offset = Vector2(0, -215)
+
+[node name="PromptPeck" type="Area2D" parent="HangingRoom"]
+position = Vector2(241.92, 0.0)
+script = ExtResource("prompt")
+text = "No alto do balanço:  E / J   bicar o fio"
+zone_size = Vector2(320, 420)
+z_index = 50
+label_offset = Vector2(0, -215)
+active = false
+
+[node name="PromptPull" type="Area2D" parent="DoorHallway"]
+position = Vector2(563.6, -51.03)
+script = ExtResource("prompt")
+text = "Bica a corda e afasta-te para puxar"
+zone_size = Vector2(110, 70)
+z_index = 50
+label_offset = Vector2(0, -120)
+
+[node name="PromptEnter" type="Area2D" parent="DoorHallway"]
+position = Vector2(565.11, 0.0)
+script = ExtResource("prompt")
+text = "Enter   entrar"
+zone_size = Vector2(90, 90)
+z_index = 50
+label_offset = Vector2(0, -150)
+active = false
+show_every_time = true
+
+[node name="PromptShadow" type="Area2D" parent="HunterHallway" groups=["shadow_prompt"]]
+position = Vector2(322.81, 0.0)
+script = ExtResource("prompt")
+text = "Fica na sombra"
+zone_size = Vector2(160, 90)
+z_index = 50
+label_offset = Vector2(0, -90)
+active = false
+show_every_time = true
+
+[node name="PartnerCall" parent="." instance=ExtResource("partner")]
+position = Vector2(2500, -150)
+
+[node name="Pigeon" parent="." instance=ExtResource("pigeon")]
+position = Vector2(124.74, -264.22)
+
+[node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("camera")
+position = Vector2(362.9, -150)
+zoom = Vector2(1.63, 1.63)
+target = NodePath("../Pigeon")
+vertical_bias = -40.0
+look_ahead = 50.0
+
+[node name="DemoHUD" parent="." node_paths=PackedStringArray("pigeon", "partner") instance=ExtResource("hud")]
+pigeon = NodePath("../Pigeon")
+partner = NodePath("../PartnerCall")
+help_text = "KU-KOO  ·  Nível 1: o talho\nA / D   andar  ·  pendurado: baloiçar\nEspaço   saltar  ·  no ar: bater asas\nE ou J   bicar  (fio · corda · agarrar · portada)\nQ ou K   arrulhar\nEnter   entrar (porta aberta)\nR   recomeçar   ·   F1   esconder ajuda"
+
+[node name="Overlay" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Fade" type="ColorRect" parent="Overlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1.0)
+
+[node name="EndLabel" type="Label" parent="Overlay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -40.0
+offset_right = 300.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.15, 0.13, 0.12, 1.0)
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "Fim do Nível 1 · o talho\nSegue-se: a ilha"
+
+[connection signal="swing_high" from="HangingRoom/HangingString" to="HangingRoom/PromptSwing" method="complete"]
+[connection signal="swing_high" from="HangingRoom/HangingString" to="HangingRoom/PromptPeck" method="activate"]
+[connection signal="broken" from="HangingRoom/HangingString" to="HangingRoom/PromptPeck" method="complete"]
+[connection signal="pulled" from="DoorHallway/LatchCord" to="DoorHallway/Door" method="open"]
+[connection signal="pulled" from="DoorHallway/LatchCord" to="DoorHallway/Door/Creak" method="play_event"]
+[connection signal="pulled" from="DoorHallway/LatchCord" to="DoorHallway/LatchCord/LatchSound" method="play_event"]
+[connection signal="pulled" from="DoorHallway/LatchCord" to="DoorHallway/PromptPull" method="complete"]
+[connection signal="pulled" from="DoorHallway/LatchCord" to="DoorHallway/LatchCord/Grab" method="disable"]
+[connection signal="opened" from="DoorHallway/Door" to="DoorHallway/Doorway" method="enable"]
+[connection signal="opened" from="DoorHallway/Door" to="DoorHallway/PromptEnter" method="activate"]
+[connection signal="pigeon_entered" from="DoorHallway/ThroughTunnel" to="HangingRoom/Shade" method="darken"]
+[connection signal="pigeon_entered" from="DoorHallway/ThroughTunnel" to="HangingRoom/TunnelPlug" method="make_solid"]
+[connection signal="opened" from="DoorHallway/Door" to="DoorHallway/LatchCord" method="hide"]
+[connection signal="focus_changed" from="Entrance/ShutterPush" to="." method="shutter_hint"]
+[connection signal="switched_on" from="Entrance/ShutterPush" to="Entrance/ShutterSound" method="play_event"]
+[connection signal="switched_on" from="Entrance/ShutterPush" to="." method="open_window"]
+[connection signal="switched_on" from="Entrance/ShutterPush" to="." method="finish"]

@@ -18,8 +18,8 @@ func get_body() -> PushableBody:
 
 func can_interact(pigeon: Pigeon) -> bool:
 	var body := get_body()
-	return super(pigeon) and body != null and pigeon.is_on_floor() \
-		and absf(body.global_position.y - pigeon.global_position.y) <= max_height_difference
+	return super(pigeon) and body != null and pigeon.is_grounded() \
+		and pigeon.same_level_as(body, max_height_difference)
 
 
 func _interact(pigeon: Pigeon) -> void:

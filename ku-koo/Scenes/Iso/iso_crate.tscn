@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Iso/iso_pushable_body.gd" id="1_push"]
+[ext_resource type="Script" path="res://Scripts/Interaction/grab_interactable.gd" id="2_grab"]
+
+[sub_resource type="ConvexPolygonShape2D" id="Shape_grab"]
+points = PackedVector2Array(0, -18, 36, 0, 0, 18, -36, 0)
+
+[node name="IsoCrate" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("1_push")
+
+[node name="Grab" type="Area2D" parent="."]
+script = ExtResource("2_grab")
+height = 6.0
+marker_offset = Vector2(0, -44)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Grab"]
+shape = SubResource("Shape_grab")

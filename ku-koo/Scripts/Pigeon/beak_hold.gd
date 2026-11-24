@@ -16,6 +16,12 @@ var visual_offset: Vector2 = Vector2.ZERO:
 		visual_offset = value
 		_refresh_position()
 
+## Height above the ground (top-down camera); lifts the beak with the pigeon.
+var height_offset: float = 0.0:
+	set(value):
+		height_offset = value
+		_refresh_position()
+
 ## Beak position when facing right (from the scene), before visual_offset.
 var base_position: Vector2
 var _facing: int = 1
@@ -55,7 +61,7 @@ func drop() -> void:
 	var item := take_carried()
 	if item == null:
 		return
-	item.detach(pigeon.get_parent(), global_position, Vector2(pigeon.facing * 30.0, -30.0))
+	item.detach(pigeon.get_parent(), pigeon.get_drop_point(), pigeon.get_drop_velocity())
 	pigeon.action.emit(&"drop")
 
 
@@ -101,4 +107,4 @@ func set_facing(new_facing: int) -> void:
 
 
 func _refresh_position() -> void:
-	position = Vector2((base_position.x + visual_offset.x) * _facing, base_position.y + visual_offset.y)
+	position = Vector2((base_position.x + visual_offset.x) * _facing, base_position.y + visual_offset.y - height_offset)
